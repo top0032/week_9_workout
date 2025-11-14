@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <title>작품주제</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+    <h2>작품주제</h2>
+    
+    <h3 id="project-title">...</h3>
+    <p id="project-description">...</p>
+    
+    <a href="/">← 홈</a>
+
+    <script>
+    (() => {
+        const API_URL = '/api/subject';
+        const titleEl = document.getElementById('project-title');
+        const descEl = document.getElementById('project-description');
+
+        fetch(API_URL)
+            .then(res => res.ok ? res.json() : Promise.reject(`Fetch Error: ${res.status}`))
+            .then(data => {
+                document.title = `작품주제 - ${data.title}`;
+                titleEl.textContent = data.title;
+                descEl.textContent = data.description;
+            })
+            .catch(err => {
+                console.error('로드 오류:', err);
+                titleEl.textContent = "데이터 로드 실패";
+            });
+    })();
+    </script>
+</body>
+</html>

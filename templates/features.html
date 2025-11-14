@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <title>핵심기능</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+    <h2>핵심기능</h2>
+    
+    <ul id="features-list">
+        <li>...로드 중...</li>
+    </ul> 
+    
+    <a href="/">← 홈</a>
+
+    <script>
+    (() => {
+        const API_URL = '/api/features';
+        const listEl = document.getElementById('features-list');
+
+        fetch(API_URL)
+            .then(res => res.ok ? res.json() : Promise.reject(`Fetch Error: ${res.status}`))
+            .then(data => {
+                listEl.innerHTML = ''; // 기존 <li> 지우기
+                data.features.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    listEl.appendChild(li);
+                });
+            })
+            .catch(err => {
+                console.error('로드 오류:', err);
+                listEl.innerHTML = '<li>데이터 로드 실패</li>';
+            });
+    })();
+    </script>
+</body>
+</html>

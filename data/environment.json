@@ -1,0 +1,8 @@
+{
+  "items": [
+    "Front-End(프론트엔드): Flutter",
+    "Back-End(백엔드): Node.js, Firebase CLI",
+    "DB(데이터베이스): Firestore Database",
+    "Deploy(배포): Firebase Functions"
+  ]
+}

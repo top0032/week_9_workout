@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <title>실용적 근거</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+    <h2>실용적 근거</h2>
+    <p><b>문제: </b> <span id="problem">...</span></p>
+    <p><b>근거: </b></p>
+    <ul id="basis-list-1"><li>...</li></ul>
+    <ul id="basis-list-2"><li>...</li></ul>
+    <p><b>가치: </b> <span id="value">...</span></p>
+    <a href="/">← 홈</a>
+
+    <script>
+    (() => {
+        const API_URL = '/api/rationale';
+        fetch(API_URL)
+            .then(res => res.ok ? res.json() : Promise.reject(`Fetch Error: ${res.status}`))
+            .then(data => {
+                document.getElementById('problem').textContent = data.problem;
+                document.getElementById('value').textContent = data.value;
+                
+                // 원본 HTML 구조(분리된 <ul>)를 유지하며 데이터 삽입
+                const basis1 = document.querySelector('#basis-list-1 li');
+                const basis2 = document.querySelector('#basis-list-2 li');
+                if(basis1 && data.basis[0]) basis1.textContent = data.basis[0];
+                if(basis2 && data.basis[1]) basis2.textContent = data.basis[1];
+            })
+            .catch(err => {
+                console.error('로드 오류:', err);
+                document.getElementById('problem').textContent = "로드 실패";
+            });
+    })();
+    </script>
+</body>
+</html>
